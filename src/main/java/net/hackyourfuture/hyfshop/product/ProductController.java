@@ -21,16 +21,20 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public List<ProductResponse> searchProducts(@Nullable @RequestParam("color") String color) {
-        if (color == null) {
+    public List<ProductResponse> searchProducts(@RequestParam(value = "color", required = false) String color) {
+        if (color == null || color.isBlank()) {
             return productService.getAllProducts();
         }
+
         return productService.searchProducts(color);
     }
 
     @PutMapping("/{id}/size")
-    public ProductResponse setProductSize(@PathVariable int id, @RequestBody SetSizeRequest request) {
-        return productService.setProductSize(id, request.size());
+    public ProductResponse setSize(
+            @PathVariable int id,
+            @RequestParam String size
+    ) {
+        return productService.setProductSize(id, size);
     }
 
     @PutMapping("/{id}/image")

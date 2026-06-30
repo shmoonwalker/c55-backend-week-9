@@ -2,8 +2,8 @@ spring:
   application:
     name: hyf_shop
   datasource:
-    url: '${DB_URL}'
-    username: '${DB_USERNAME}'
-    password: '${DB_PASSWORD}'
+    url: 'jdbc:postgresql://localhost:5432/hyfshop'
+    username: 'hyfuser'
+    password: 'hyfpassword'
 server:
   port: '8080'
