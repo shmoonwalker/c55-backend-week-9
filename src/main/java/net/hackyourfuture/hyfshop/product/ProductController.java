@@ -1,6 +1,5 @@
 package net.hackyourfuture.hyfshop.product;
 
-import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import net.hackyourfuture.hyfshop.product.dto.ProductResponse;
 import net.hackyourfuture.hyfshop.product.dto.SetSizeRequest;
@@ -30,15 +29,12 @@ public class ProductController {
     }
 
     @PutMapping("/{id}/size")
-    public ProductResponse setSize(
-            @PathVariable int id,
-            @RequestParam String size
-    ) {
-        return productService.setProductSize(id, size);
+    public ProductResponse setSize(@PathVariable int id, @RequestBody SetSizeRequest request) {
+        return productService.setProductSize(id, request.size());
     }
 
     @PutMapping("/{id}/image")
-    public ProductResponse setProductImage(@PathVariable int id, @RequestBody MultipartFile file) {
+    public ProductResponse setProductImage(@PathVariable int id, @RequestParam("file") MultipartFile file) {
         return productService.setProductImage(id, file);
     }
 

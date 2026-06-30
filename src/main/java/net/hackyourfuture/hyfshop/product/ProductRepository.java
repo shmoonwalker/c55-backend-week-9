@@ -30,11 +30,10 @@ public class ProductRepository {
                         new TypeReference<Map<String, Object>>() {
                         }));
             }
-        }
-            catch (Exception e) {
-                throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
 
-            }
+        }
 
         return product;
     };
@@ -49,10 +48,10 @@ public class ProductRepository {
 
     public Product findById(int id) {
         return jdbcClient.sql("""
-            SELECT id, title, price, category, image_url, details
-            FROM products
-            WHERE id = ?
-            """)
+                        SELECT id, title, price, category, image_url, details
+                        FROM products
+                        WHERE id = ?
+                        """)
                 .param(id)
                 .query(PRODUCT_ROW_MAPPER)
                 .single();
@@ -71,11 +70,11 @@ public class ProductRepository {
 
     public List<Product> findByColor(String color) {
         return jdbcClient.sql("""
-            SELECT *
-            FROM products
-            WHERE details->>'color' = ?
-               OR jsonb_exists(details->'colors', ?)
-            """)
+                        SELECT *
+                        FROM products
+                        WHERE details->>'color' = ?
+                           OR jsonb_exists(details->'colors', ?)
+                        """)
                 .param(color)
                 .param(color)
                 .query(PRODUCT_ROW_MAPPER)
@@ -84,11 +83,11 @@ public class ProductRepository {
 
     public Product setSize(int id, String size) {
         return jdbcClient.sql("""
-            UPDATE products
-            SET details = jsonb_set(details, '{size}', to_jsonb(CAST(? AS text)))
-            WHERE id = ?
-            RETURNING *
-            """)
+                        UPDATE products
+                        SET details = jsonb_set(details, '{size}', to_jsonb(CAST(? AS text)))
+                        WHERE id = ?
+                        RETURNING *
+                        """)
                 .param(size)
                 .param(id)
                 .query(PRODUCT_ROW_MAPPER)
